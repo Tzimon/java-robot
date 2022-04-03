@@ -23,7 +23,7 @@ public class ConveyorBeltController implements ConveyorBelt {
 
         queuedBalls = new ArrayDeque<>(config.queueLength());
 
-        for (var i = 0; i < config.queueLength(); i++) appendNewBall();
+        for (int i = 0; i < config.queueLength(); i++) appendNewBall();
     }
 
     private void appendNewBall() {
@@ -32,7 +32,7 @@ public class ConveyorBeltController implements ConveyorBelt {
     }
 
     public Ball takeBall() {
-        var ball = queuedBalls.poll();
+        Ball ball = queuedBalls.poll();
         appendNewBall();
 
         return ball;

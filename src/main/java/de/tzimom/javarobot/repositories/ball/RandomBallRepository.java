@@ -5,7 +5,6 @@ import de.tzimom.javarobot.entities.RenderColor;
 import de.tzimom.javarobot.controllers.BallController;
 
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 

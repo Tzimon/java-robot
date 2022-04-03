@@ -4,8 +4,7 @@ import de.tzimom.javarobot.graphics.rendering.dynamic.DynamicElement;
 import de.tzimom.javarobot.graphics.rendering.dynamic.DynamicShape;
 import de.tzimom.javarobot.graphics.rendering.dynamic.Vector2f;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 public class ShapeRenderer implements DynamicElement {
     private final DynamicShape shape;
@@ -21,13 +20,13 @@ public class ShapeRenderer implements DynamicElement {
     }
 
     public void render(Graphics2D graphics, int scale) {
-        var colorBefore = graphics.getColor();
-        var translation = location.multiply(scale);
+        Color colorBefore = graphics.getColor();
+        Vector2f translation = location.multiply(scale);
 
         graphics.setColor(color);
         graphics.translate(translation.x(), translation.y());
 
-        var scaledShape = shape.scale(scale);
+        Shape scaledShape = shape.scale(scale);
 
         if (fill) graphics.fill(scaledShape);
         else graphics.draw(scaledShape);

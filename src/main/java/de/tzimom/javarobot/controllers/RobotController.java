@@ -24,7 +24,7 @@ public class RobotController implements Robot {
     public Optional<Ball> grabBall() {
         if (currentBall != null) throw new IllegalRobotStateException(this);
 
-        var ball = conveyorBeltService.provideBall(currentAngle);
+        Optional<Ball> ball = conveyorBeltService.provideBall(currentAngle);
         currentBall = ball.orElse(null);
 
         return ball;

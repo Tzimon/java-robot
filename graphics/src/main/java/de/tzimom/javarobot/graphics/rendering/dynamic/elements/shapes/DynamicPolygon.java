@@ -16,12 +16,12 @@ public class DynamicPolygon implements DynamicShape {
     }
 
     public Shape scale(int scale) {
-        var scaledPoints = points.stream().map(point -> point.multiply(scale)).collect(Collectors.toList());
+        List<Vector2f> scaledPoints = points.stream().map(point -> point.multiply(scale)).collect(Collectors.toList());
 
-        var path = new Path2D.Float();
+        Path2D.Float path = new Path2D.Float();
         if (scaledPoints.isEmpty()) return path;
 
-        var firstPoint = scaledPoints.stream().findFirst().orElse(null);
+        Vector2f firstPoint = scaledPoints.stream().findFirst().orElse(null);
         scaledPoints.remove(firstPoint);
 
         path.moveTo(firstPoint.x(), firstPoint.y());

@@ -5,6 +5,7 @@ import de.tzimom.javarobot.graphics.rendering.dynamic.Vector2f;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
 public class TextRenderer implements DynamicElement {
@@ -23,21 +24,21 @@ public class TextRenderer implements DynamicElement {
     }
 
     public void render(Graphics2D graphics, int scale) {
-        var colorBefore = graphics.getColor();
-        var fontBefore = graphics.getFont();
+        Color colorBefore = graphics.getColor();
+        Font fontBefore = graphics.getFont();
 
-        var scaledSize = size * scale;
-        var scaledLocation = location.multiply(scale);
+        float scaledSize = size * scale;
+        Vector2f scaledLocation = location.multiply(scale);
 
-        var font = new Font(fontInfo.name, fontInfo.style, (int) scaledSize);
+        Font font = new Font(fontInfo.name, fontInfo.style, (int) scaledSize);
 
         graphics.setColor(color);
         graphics.setFont(font);
 
         if (fontInfo.centered()) {
-            var metrics = graphics.getFontMetrics(font);
-            var delta = new Vector2f(-metrics.stringWidth(text) / 2f, -metrics.getHeight() / 2f + metrics.getAscent());
-            var centeredLocation = scaledLocation.add(delta);
+            FontMetrics metrics = graphics.getFontMetrics(font);
+            Vector2f delta = new Vector2f(-metrics.stringWidth(text) / 2f, -metrics.getHeight() / 2f + metrics.getAscent());
+            Vector2f centeredLocation = scaledLocation.add(delta);
 
             graphics.drawString(text, centeredLocation.x(), centeredLocation.y());
         } else graphics.drawString(text, scaledLocation.x(), scaledLocation.y());
@@ -46,5 +47,27 @@ public class TextRenderer implements DynamicElement {
         graphics.setFont(fontBefore);
     }
 
-    public static record FontInfo(String name, int style, boolean centered) {}
+    public static final class FontInfo {
+        private final String name;
+        private final int style;
+        private final boolean centered;
+
+        public FontInfo(String name, int style, boolean centered) {
+            this.name = name;
+            this.style = style;
+            this.centered = centered;
+        }
+
+        public String name() {
+            return name;
+        }
+
+        public int style() {
+            return style;
+        }
+
+        public boolean centered() {
+            return centered;
+        }
+    }
 }

@@ -120,24 +120,24 @@ public enum Curve {
     },
     EASE_IN_BACK {
         double getValueAt(double x) {
-            var c1 = 1.70158;
-            var c3 = c1 + 1;
+            double c1 = 1.70158;
+            double c3 = c1 + 1;
 
             return c3 * x * x * x - c1 * x * x;
         }
     },
     EASE_OUT_BACK {
         double getValueAt(double x) {
-            var c1 = 1.70158;
-            var c3 = c1 + 1;
+            double c1 = 1.70158;
+            double c3 = c1 + 1;
 
             return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
         }
     },
     EASE_IN_OUT_BACK {
         double getValueAt(double x) {
-            var c1 = 1.70158;
-            var c2 = c1 * 1.525;
+            double c1 = 1.70158;
+            double c2 = c1 * 1.525;
 
             return x < 0.5
                     ? (Math.pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2
@@ -146,7 +146,7 @@ public enum Curve {
     },
     EASE_IN_ELASTIC {
         double getValueAt(double x) {
-            var c4 = (2 * Math.PI) / 3;
+            double c4 = (2 * Math.PI) / 3;
 
             return x == 0
                     ? 0
@@ -157,7 +157,7 @@ public enum Curve {
     },
     EASE_OUT_ELASTIC {
         double getValueAt(double x) {
-            var c4 = (2 * Math.PI) / 3;
+            double c4 = (2 * Math.PI) / 3;
 
             return x == 0
                     ? 0
@@ -168,8 +168,8 @@ public enum Curve {
     },
     EASE_IN_OUT_ELASTIC {
         double getValueAt(double x) {
-            var c5 = (2 * Math.PI) / 4.5;
-            var sin = Math.sin((20 * x - 11.125) * c5);
+            double c5 = (2 * Math.PI) / 4.5;
+            double sin = Math.sin((20 * x - 11.125) * c5);
 
             return x == 0
                     ? 0
@@ -187,8 +187,8 @@ public enum Curve {
     },
     EASE_OUT_BOUNCE {
         double getValueAt(double x) {
-            var n1 = 7.5625;
-            var d1 = 2.75;
+            double n1 = 7.5625;
+            double d1 = 2.75;
 
             if (x < 1 / d1) return n1 * x * x;
             if (x < 2 / d1) return n1 * (x -= 1.5 / d1) * x + 0.75;

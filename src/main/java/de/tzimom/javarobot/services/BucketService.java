@@ -13,7 +13,7 @@ public class BucketService {
     }
 
     public Optional<Bucket> dropBall(float angle) {
-        var bucket = bucketRepository.getAllBuckets().stream()
+        Optional<Bucket> bucket = bucketRepository.getAllBuckets().stream()
                 .filter(entry -> Math.abs(angle - entry.getConfig().relativeAngle()) < entry.getConfig().angleErrorMargin())
                 .findFirst();
 

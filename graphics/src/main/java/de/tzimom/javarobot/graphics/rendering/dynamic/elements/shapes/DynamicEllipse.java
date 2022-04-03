@@ -14,7 +14,7 @@ public class DynamicEllipse implements DynamicShape {
     }
 
     public Shape scale(int scale) {
-        var scaledSize = size.multiply(scale);
+        Vector2f scaledSize = size.multiply(scale);
         return new Ellipse2D.Float(0f, 0f, scaledSize.x(), scaledSize.y());
     }
 }

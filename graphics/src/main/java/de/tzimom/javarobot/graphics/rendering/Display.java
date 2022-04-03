@@ -32,20 +32,20 @@ public class Display {
     }
 
     public void update(Collection<GraphicsComponent> components) {
-        var graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
+        Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
 
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        var width = frame.getWidth();
-        var height = frame.getHeight();
-        var scale = Math.min(width, height);
+        int width = frame.getWidth();
+        int height = frame.getHeight();
+        int scale = Math.min(width, height);
 
         graphics.setColor(backgroundColor);
         graphics.fillRect(0, 0, width, height);
 
-        var mainContentLocation = new Vector2f((width - scale) / 2f, (height - scale) / 2f);
-        var dynamicGraphics = new DynamicGraphics(graphics, Math.min(width, height));
+        Vector2f mainContentLocation = new Vector2f((width - scale) / 2f, (height - scale) / 2f);
+        DynamicGraphics dynamicGraphics = new DynamicGraphics(graphics, Math.min(width, height));
 
         graphics.translate(mainContentLocation.x(), mainContentLocation.y());
         components.forEach(component -> component.render(width, height, dynamicGraphics));

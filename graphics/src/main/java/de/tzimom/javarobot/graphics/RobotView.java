@@ -39,11 +39,11 @@ public class RobotView extends View {
 
     public void startRendering(int fps) {
         new Thread(() -> {
-            var lastFrame = System.nanoTime();
+            long lastFrame = System.nanoTime();
 
             while (true) {
-                var now = System.nanoTime();
-                var deltaTime = now - lastFrame;
+                long now = System.nanoTime();
+                long deltaTime = now - lastFrame;
 
                 if (deltaTime < 1000 / fps) continue;
 
@@ -58,10 +58,10 @@ public class RobotView extends View {
     public static void renderBall(DynamicGraphics graphics, Ball ball, Vector2f location) {
         graphics.fill(new DynamicEllipse(new Vector2f(BALL_DIAMETER)), location, ball.getColor().getValue());
 
-        var numberText = ball.getNumber().toString();
-        var numberLocation = location.add(new Vector2f(BALL_DIAMETER).multiply(0.5f));
+        String numberText = ball.getNumber().toString();
+        Vector2f numberLocation = location.add(new Vector2f(BALL_DIAMETER).multiply(0.5f));
 
-        var textColor = ball.getColor().isBright() ? Color.DARK_GRAY : Color.WHITE;
+        Color textColor = ball.getColor().isBright() ? Color.DARK_GRAY : Color.WHITE;
 
         graphics.drawText(new TextRenderer(numberText, numberLocation, BALL_RADIUS, FONT_INFO, textColor));
     }
