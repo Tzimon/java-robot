@@ -21,9 +21,6 @@ import de.tzimom.javarobot.repositories.conveyorbelt.ConveyorBeltRepository;
 import de.tzimom.javarobot.services.BucketService;
 import de.tzimom.javarobot.services.ConveyorBeltService;
 import de.tzimom.javarobot.graphics.RobotView;
-import java.util.Optional;
-
-import de.tzimom.javarobot.exceptions.IllegalRobotStateException;
 
 import java.awt.Dimension;
 import java.util.List;
@@ -37,8 +34,8 @@ public class Roboter {
     );
 
     private static final List<BucketConfig> BUCKET_CONFIGS = List.of(
-            new BucketConfig(-10, 8, RoboterFarbe.ROT),
-            new BucketConfig(10, 8, RoboterFarbe.GELB)
+            new BucketConfig(0, 8, RoboterFarbe.ROT),
+            new BucketConfig(20, 8, RoboterFarbe.GELB)
     );
 
     private static final DisplayConfig DISPLAY_CONFIG = new DisplayConfig(
@@ -46,8 +43,6 @@ public class Roboter {
             "Java Roboter",
             DisplayConfig.CloseOperation.EXIT
     );
-    
-    private static final int ACTION_DURATION = 250;
 
     private final AnimatedRobot robot;
 
@@ -82,7 +77,7 @@ public class Roboter {
         var bucketService = new BucketService(bucketRepository);
 
         var robot = new RobotController(conveyorBeltService, bucketService);
-        var turnAnimator = new TrackingAnimator(250, Curve.EASE_IN_OUT_QUAD, () -> (double) robot.getCurrentAngle());
+        var turnAnimator = new TrackingAnimator(250, Curve.EASE_IN_OUT_CUBIC, () -> (double) robot.getCurrentAngle());
 
         return new AnimatedRobot(robot, turnAnimator);
     }
@@ -91,39 +86,17 @@ public class Roboter {
         var robotViewConfig = new RobotViewConfig(DISPLAY_CONFIG, robot, conveyorBeltRepository, bucketRepository);
         return new RobotView(robotViewConfig);
     }
-    
-    private void pause() {
-        try {
-            Thread.sleep(ACTION_DURATION);
-        } catch (InterruptedException ignored) {}
-    }
 
-    public void drehenUm(float winkel) {
-        if (winkel == 0) return;
-        
-        drehenZu(winkel + robot.getCurrentAngle());
-    }
-    
-    public void drehenZu(float winkel) {
-        robot.turnTo(winkel);
-        pause();
+    public void drehen(float winkel) {
+        robot.turnTo(winkel + robot.getCurrentRealAngle());
     }
 
     public Ball greifen() {
-        try {
-            Optional<Ball> grabbedBall = robot.grabBall();
-            pause();
-            return grabbedBall.orElse(null);
-        } catch (IllegalRobotStateException ignored) {
-            return null;
-        }
+        return robot.grabBall().orElse(null);
     }
 
     public void loslassen() {
-        try {
-            robot.dropBall();
-            pause();
-        } catch (IllegalRobotStateException ignored) {}
+        robot.dropBall();
     }
 
     public Ball ballGeben() {
