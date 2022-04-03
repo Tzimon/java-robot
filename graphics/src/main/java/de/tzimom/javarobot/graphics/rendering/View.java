@@ -15,6 +15,24 @@ public abstract class View {
         display = new Display(backgroundColor, displayConfig);
     }
 
+    public void startRendering(int fps) {
+        new Thread(() -> {
+            long lastFrame = System.nanoTime();
+
+            while (true) {
+                long now = System.nanoTime();
+                long deltaTime = now - lastFrame;
+
+                if (deltaTime < 1000 / fps) continue;
+
+                try {
+                    update();
+                    lastFrame = now;
+                } catch (IllegalStateException ignored) {}
+            }
+        }).start();
+    }
+
     protected void addComponent(GraphicsComponent component) {
         components.add(component);
     }

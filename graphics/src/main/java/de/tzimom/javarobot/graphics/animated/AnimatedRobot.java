@@ -36,13 +36,6 @@ public class AnimatedRobot implements Robot {
         return (float) turnAnimator.getCurrentValue();
     }
 
-    /**
-     * @return The current real angle the robot arm has
-     */
-    public float getCurrentRealAngle() {
-        return robot.getCurrentAngle();
-    }
-
     public Optional<Ball> getCurrentBall() {
         return robot.getCurrentBall();
     }

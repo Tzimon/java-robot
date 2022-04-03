@@ -1,31 +1,37 @@
 package de.tzimom.javarobot.graphics.rendering.config;
 
 import javax.swing.WindowConstants;
-import java.awt.Dimension;
 
 /**
  * Describes how the display for the robot should be initialized
  */
 public final class DisplayConfig {
-    private final Dimension size;
+    private final int width;
+    private final int height;
     private final String title;
     private final CloseOperation defaultCloseOperation;
 
     /**
-     * @param size The initial size of the window
+     * @param width The initial width of the window
+     * @param height The initial height of the window
      * @param title The title of the window
      * @param defaultCloseOperation The default close operation of the window
      *
      * @see WindowConstants Magic constants for the close operation
      */
-    public DisplayConfig(Dimension size, String title, CloseOperation defaultCloseOperation) {
-        this.size = size;
+    public DisplayConfig(int width, int height, String title, CloseOperation defaultCloseOperation) {
+        this.width = width;
+        this.height = height;
         this.title = title;
         this.defaultCloseOperation = defaultCloseOperation;
     }
 
-    public Dimension size() {
-        return size;
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
     }
 
     public String title() {

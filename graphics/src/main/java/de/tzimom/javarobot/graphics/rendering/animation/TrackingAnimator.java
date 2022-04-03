@@ -19,5 +19,4 @@ public class TrackingAnimator extends Animator {
         animateTo(lastTrackedValue = trackedValue.get());
         return super.getCurrentValue();
     }
-
 }

@@ -1,20 +1,21 @@
 package de.tzimom.javarobot.graphics;
 
 import de.tzimom.javarobot.entities.Ball;
+import de.tzimom.javarobot.entities.Robot;
 import de.tzimom.javarobot.graphics.components.BucketComponent;
 import de.tzimom.javarobot.graphics.components.ConveyorBeltComponent;
 import de.tzimom.javarobot.graphics.components.RobotArmComponent;
-import de.tzimom.javarobot.graphics.config.RobotViewConfig;
-import de.tzimom.javarobot.graphics.rendering.GraphicsComponent;
 import de.tzimom.javarobot.graphics.rendering.View;
+import de.tzimom.javarobot.graphics.rendering.config.DisplayConfig;
 import de.tzimom.javarobot.graphics.rendering.dynamic.DynamicGraphics;
 import de.tzimom.javarobot.graphics.rendering.dynamic.Vector2f;
 import de.tzimom.javarobot.graphics.rendering.dynamic.elements.TextRenderer;
 import de.tzimom.javarobot.graphics.rendering.dynamic.elements.shapes.DynamicEllipse;
+import de.tzimom.javarobot.repositories.bucket.BucketRepository;
+import de.tzimom.javarobot.repositories.conveyorbelt.ConveyorBeltRepository;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Collection;
 
 public class RobotView extends View {
     private static final Color BACKGROUND_COLOR = new Color(50, 50, 50);
@@ -29,30 +30,12 @@ public class RobotView extends View {
     public static final float BALL_RADIUS = 0.025f;
     public static final float BALL_DIAMETER = 2 * BALL_RADIUS;
 
-    public RobotView(RobotViewConfig config) {
-        super(BACKGROUND_COLOR, config.displayConfig());
+    public RobotView(DisplayConfig displayConfig, ConveyorBeltRepository conveyorBeltRepository, BucketRepository bucketRepository, Robot robot) {
+        super(BACKGROUND_COLOR, displayConfig);
 
-        addComponent(new RobotArmComponent(config.robot()));
-        config.conveyorBeltRepository().getAllConveyorBelts().stream().map(ConveyorBeltComponent::new).forEach(this::addComponent);
-        config.bucketRepository().getAllBuckets().stream().map(BucketComponent::new).forEach(this::addComponent);
-    }
-
-    public void startRendering(int fps) {
-        new Thread(() -> {
-            long lastFrame = System.nanoTime();
-
-            while (true) {
-                long now = System.nanoTime();
-                long deltaTime = now - lastFrame;
-
-                if (deltaTime < 1000 / fps) continue;
-
-                try {
-                    update();
-                    lastFrame = now;
-                } catch (IllegalStateException ignored) {}
-            }
-        }).start();
+        addComponent(new RobotArmComponent(robot));
+        conveyorBeltRepository.getAllConveyorBelts().stream().map(ConveyorBeltComponent::new).forEach(this::addComponent);
+        bucketRepository.getAllBuckets().stream().map(BucketComponent::new).forEach(this::addComponent);
     }
 
     public static void renderBall(DynamicGraphics graphics, Ball ball, Vector2f location) {

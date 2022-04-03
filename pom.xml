@@ -11,6 +11,7 @@
 
     <modules>
         <module>graphics</module>
+        <module>assistant</module>
     </modules>
 
     <properties>
