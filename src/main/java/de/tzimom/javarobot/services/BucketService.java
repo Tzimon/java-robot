@@ -14,7 +14,8 @@ public class BucketService {
 
     public Optional<Bucket> dropBall(float angle) {
         Optional<Bucket> bucket = bucketRepository.getAllBuckets().stream()
-                .filter(entry -> Math.abs(angle - entry.getConfig().relativeAngle()) < entry.getConfig().angleErrorMargin())
+                .filter(entry -> Math.abs((angle + 360) % 360 - (entry.getConfig().relativeAngle() + 360) % 360)
+                        < entry.getConfig().angleErrorMargin())
                 .findFirst();
 
         bucket.ifPresent(Bucket::dropBall);
