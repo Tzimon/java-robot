@@ -1,19 +1,19 @@
 package de.tzimom.javarobot.services;
 
-import de.tzimom.javarobot.api.Bucket;
+import de.tzimom.javarobot.entities.Bucket;
+import de.tzimom.javarobot.repositories.bucket.BucketRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public class BucketService {
-    private final List<Bucket> buckets;
+    private final BucketRepository bucketRepository;
 
-    public BucketService(List<Bucket> buckets) {
-        this.buckets = buckets;
+    public BucketService(BucketRepository bucketRepository) {
+        this.bucketRepository = bucketRepository;
     }
 
     public Optional<Bucket> dropBall(float angle) {
-        var bucket = buckets.stream()
+        var bucket = bucketRepository.getAllBuckets().stream()
                 .filter(entry -> Math.abs(angle - entry.getConfig().relativeAngle()) < entry.getConfig().angleErrorMargin())
                 .findFirst();
 

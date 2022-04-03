@@ -1,14 +1,14 @@
 package de.tzimom.javarobot.config;
 
-import de.tzimom.javarobot.repositories.BallRepository;
-
-import java.util.List;
+import de.tzimom.javarobot.repositories.ball.BallRepository;
+import de.tzimom.javarobot.repositories.bucket.BucketRepository;
+import de.tzimom.javarobot.repositories.conveyorbelt.ConveyorBeltRepository;
 
 /**
  * Describes how the robot should be created
  *
  * @param ballRepository The ball repository the robot uses
- * @param conveyorBelts The available conveyor belts for the robot to operate on
- * @param buckets The available buckets for the robot to drop balls in
+ * @param conveyorBeltRepository The repository of conveyor belts the robot uses
+ * @param bucketRepository The repository of buckets the robot uses
  */
-public record RobotConfig(BallRepository ballRepository, List<ConveyorBeltConfig> conveyorBelts, List<BucketConfig> buckets) { }
+public record RobotConfig(BallRepository ballRepository, ConveyorBeltRepository conveyorBeltRepository, BucketRepository bucketRepository) { }
